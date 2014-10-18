@@ -1,7 +1,7 @@
 var filesys = function() {
 	
 	var folderName = 'testbtch';//"telerik/moving/images";
-	var fileName = "imageX.png";
+	var fileName = "imageX.jpg";
 	var folderPath = '';
 	var readyCallback;
 	
