@@ -19,6 +19,8 @@
         <script src="scripts/app/comments.js" type="text/javascript"></script>
         <script src="scripts/app/add-activity.js" type="text/javascript"></script>
         <script src="scripts/app/add-comment.js" type="text/javascript"></script>
+		
+		<script src="scripts/lib/gifjs/gif.js" type="text/javascript"></script>
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
@@ -42,6 +44,66 @@
                     <li class="password"><input type="password" id="loginPassword" placeholder="Password" required validationMessage="Password is required!" /></li>
                 </ul>
             </form>
+			
+			
+			<div id="gifjstest">
+				<img id="gifjs1"  />
+				
+				<script>
+					gifimages = new Array();
+					
+					for (var i = 1; i < 5; i++) {
+						var img = new Image();
+						img.onload = checkImagesLoaded;
+						gifimages.push(img);
+					}
+					
+					
+					for (var i = 0; i < 4; i++) {
+						gifimages[i].src = "styles/images/gifjs/anim" + (i + 1) + ".jpg";
+					}
+					
+					var buildStarted;
+					
+					function checkImagesLoaded() {
+						for (var i = 0; i < 4; i++) {
+							if (!gifimages[i].complete) {
+								console.log('still loading', i);
+								console.log(gifimages);
+								return;
+							}
+						}
+						
+						console.log('all images loaded');
+						if (buildStarted)
+							return;
+						buildStarted = true;
+						
+						var gif = new GIF({
+							workers: 2,
+							quality: 10
+						});
+						
+						for (var i = 0; i < 4; i++) {
+							gif.addFrame(gifimages[i], {delay:100});
+						}
+						
+							
+						
+						gif.on('finished', function(blob) {
+							console.log('on gifjs finished');
+							$('#gifjs1').attr('src', URL.createObjectURL(blob));
+							//window.open(URL.createObjectURL(blob));
+						});
+						
+						gif.render();
+					}
+					
+					
+				</script>
+			</div>
+			
+			
             <ol class="group-wrp">
                 <li>
                     <span id="login" data-role="touch" data-bind="events: { tap: login }">
