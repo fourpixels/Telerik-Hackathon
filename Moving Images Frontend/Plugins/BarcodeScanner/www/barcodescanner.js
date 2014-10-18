@@ -66,7 +66,9 @@ function BarcodeScanner() {
  *    }
  * @param {Function} errorCallback
  */
-BarcodeScanner.prototype.scan = function (successCallback, errorCallback) {
+BarcodeScanner.prototype.scan = function (successCallback, errorCallback, paths) {
+	console.log(' ### PATHS');
+	
     if (errorCallback == null) {
         errorCallback = function () {};
     }
@@ -81,7 +83,7 @@ BarcodeScanner.prototype.scan = function (successCallback, errorCallback) {
         return;
     }
 
-    cordova.exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', ["abc","123","456","efg"]); //TODO - path here
+    cordova.exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', paths); //TODO - path here
 };
 
 //-------------------------------------------------------------------

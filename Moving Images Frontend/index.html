@@ -167,7 +167,7 @@
 			var that = this;
 			console.log ("KOPELENCE!");
 			app.divDebug('KOPELE');
-			return;
+			
 			
 			window.plugins.barcodeScanner.scan(
 				function (result) {
@@ -181,7 +181,9 @@
 					alert("Error: " + error);
 					app.divDebug('Error');
 					console.log("Toast failed: " + error);
-			});
+				},
+				app.fileSystem.generateImagesArray(appSettings.config.numberOfImagesToSave)
+			);
 		}
 	</script>
 		

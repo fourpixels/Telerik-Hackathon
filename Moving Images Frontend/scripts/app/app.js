@@ -188,6 +188,7 @@ var app = (function (win) {
 
     return {
 		divDebug: divDebug,
+		fileSystem: fs,
         showAlert: showAlert,
         showError: showError,
         showConfirm: showConfirm,
