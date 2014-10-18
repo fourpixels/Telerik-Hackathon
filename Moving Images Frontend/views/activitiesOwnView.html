@@ -1,4 +1,4 @@
-<div data-role="view" id="view-all-activities" data-title="Public activities" data-layout="drawer-layout" class="activities-view" data-model="app.Activities" data-before-show="app.Activities.getAllActivities">
+<div data-role="view" id="view-all-activities" data-title="My personal activities" data-layout="drawer-layout" class="activities-view" data-model="app.Activities" data-before-show="app.Activities.getOwnActivities">
 	<!--<header data-role="header">
 		<div data-role="navbar" id="employees-navbar">
 			<a data-role="button" data-rel="drawer" href="#my-drawer" data-icon="drawer-button" data-align="right"></a>
@@ -6,7 +6,7 @@
 	</header>-->
     <div data-role="header">
         <div data-role="navbar">
-            Public activities
+            My personal activities
             <!--<a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton" data-click="app.Activities.logout">Log out</a>-->
 			<a class="nav-button nav-button-add hide-text" data-align="left" data-role="button" href="#my-drawer" data-rel="drawer">Menu</a>
 			<a class="nav-button nav-button-back hide-text" data-align="left" data-role="button" data-click="app.Activities.getOwnActivities">Log out</a>

@@ -2,13 +2,20 @@ var app = (function (win) {
     'use strict';
 
     // Global error handling
-    var showAlert = function(message, title, callback) {
-        navigator.notification.alert(message, callback || function () {
-        }, title, 'OK');
+    var showAlert = function(message, title, callback, throwStack) {
+		try {
+			navigator.notification.alert(message, callback || function () {}, title, 'OK');
+		} catch (err) {
+			console.log(' >>> ', message);
+			
+			if (throwStack === true) {
+				console.log(err.stack);
+			}
+		}
     };
 
     var showError = function(message) {
-        showAlert(message, 'Error occured');
+        showAlert(message, 'Error occured', null, true);
     };
 
     win.addEventListener('error', function (e) {
@@ -66,6 +73,10 @@ var app = (function (win) {
     var onDeviceReady = function() {
         // Handle "backbutton" event
         document.addEventListener('backbutton', onBackKeyDown, false);
+		
+		if (device.platform === 'iOS' && parseFloat(device.version) >= 7.0) {
+			document.body.style.marginTop = "20px";
+		}
 
         navigator.splashscreen.hide();
         fixViewResize();
@@ -85,6 +96,9 @@ var app = (function (win) {
         } else {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
+		
+		
+		console.log('currentUser:', app.Users.currentUser);
     };
 
     // Handle "deviceready" event
@@ -137,7 +151,7 @@ var app = (function (win) {
     // Initialize KendoUI mobile application
     var mobileApp = new kendo.mobile.Application(document.body, {
                                                      transition: 'slide',
-                                                     statusBarStyle: statusBarStyle,
+                                                     //statusBarStyle: statusBarStyle, // this Holly Grail doesn't seem to work! Margin-hack works better (puke)
                                                      skin: 'flat'
                                                  });
 

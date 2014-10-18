@@ -23,11 +23,14 @@
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
+		<link href="styles/custom.css" rel="stylesheet" />
     </head>
     <body id="friendsApp">
         <div data-role="layout" data-id="default">
             <!--View content will render here-->
         </div>
+		
+		
         <!--WELCOME VIEW -->
         <div data-role="view" id="welcome" data-layout="default" class="welcome-scrn form-view" data-model="app.Login" data-init="app.Login.init" data-show="app.Login.show">
             <div data-role="header"></div>
@@ -66,5 +69,65 @@
 
             <div data-role="footer"><p>&copy; <span data-bind="text: getYear"></span> Telerik Inc.</p></div>
         </div>
+		
+	<script>
+		/** One of the Holly grails I found today:
+		 * http://www.telerik.com/forums/making-sure-drawer-always-closes-after-click
+		 * Speechless..
+		 */
+		
+		function drawerClick(e) {
+			console.log("aaaaaaaaaaaaaaaaaaaaaaa");
+			console.log(app);
+			var lv = app.mobileApp.view().title;
+			console.log('a', e);
+			var vw = e.item[0].innerText.trim();
+			console.log('lv:', lv);
+			console.log('vw:', vw);
+			if (lv == vw) {
+				$("#my-drawer").data('kendoMobileDrawer').hide();
+			}
+		}
+	</script>
+		
+	<div data-role="drawer" id="my-drawer" data-views="['views/activitiesView.html', 'views/activitiesOwnView.html']">
+		<div id="drawer-user-profile">
+			<div class="user-avatar">
+				<img id="user-avatar-img" data-bind="attr:{src: User().PictureUrl}" alt="styles/images/avatar.png" />
+			</div>
+			<div id="drawer-user-name">
+				
+			</div>
+		</div>
+		<ul data-role="listview" data-type="group" data-click="drawerClick">
+			<li>Activities
+		 	 	<ul>
+					<li data-icon="camera"><a href="views/activitiesView.html" data-transition="none">MOVE!</a></li>
+					<li data-icon="contacts"><a href="views/activitiesOwnView.html" data-transition="none">My personal activities</a></li>
+					<li data-icon="globe"><a href="views/activitiesView.html" data-transition="none">Public activities</a></li>
+		  		</ul>
+			</li>
+			
+			<li>Moving Images
+				<ul>
+					<li data-icon="camera"><a href="views/activitiesView.html" data-transition="none">About the App</a></li>
+					<li data-icon="contacts"><a href="views/activitiesOwnView.html" data-transition="none">Terms & Conditions</a></li>
+					<li data-icon="globe"><a href="views/activitiesView.html" data-transition="none">Privacy Policy</a></li>
+				</ul>
+			</li>
+		
+			<li>More dummy content
+		  		<ul>
+					<li data-icon="settings">Settings</li>
+					<li data-icon="off">Log Out</li>
+		  		</ul>
+			</li>
+		</ul>
+	</div>
+	
+	
+		
+		
+		
     </body>
 </html>

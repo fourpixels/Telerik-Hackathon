@@ -22,6 +22,10 @@ app.Users = (function () {
                 var currentUserData = data.result;
                 currentUserData.PictureUrl = app.helper.resolveProfilePictureUrl(currentUserData.Picture);
                 currentUser.set('data', currentUserData);
+				
+				console.log('currentUser:', currentUserData);
+				$('#user-avatar-img').attr('src', currentUser.data.PictureUrl);
+				$('#drawer-user-name').html(currentUser.data.DisplayName);
 
                 // Get the data about all registered users
                 return app.everlive.Users.get();

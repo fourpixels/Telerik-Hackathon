@@ -1,0 +1,14 @@
+#drawer-user-profile {
+	height: 150px;
+	background: rgba(0, 0, 0, 0);
+	padding: 1em;
+}
+
+
+.km-text, .km-listview-link {
+	color: #000 !important;
+}
+
+#friendsApp .welcome-scrn .group-wrp li:last-child {
+  margin: 0px 0px;
+}

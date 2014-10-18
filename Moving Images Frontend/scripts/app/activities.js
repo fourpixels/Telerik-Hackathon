@@ -69,6 +69,7 @@ app.Activities = (function () {
 
         // Activities data source. The Backend Services dialect of the Kendo UI DataSource component
         // supports filtering, sorting, paging, and CRUD operations.
+		
         var activitiesDataSource = new kendo.data.DataSource({
             type: 'everlive',
             schema: {
@@ -87,6 +88,7 @@ app.Activities = (function () {
                 }
             },
             sort: { field: 'CreatedAt', dir: 'desc' }
+			//filter: { field: 'UserId', operator: 'eq', value: 'b13a9d55-56b7-11e4-955f-bbcfcd62b8c9' }
         });
 
         return {
@@ -119,10 +121,26 @@ app.Activities = (function () {
                 navigateHome();
             });
         };
+		
+		var getOwnActivities = function() {
+			console.log (' -> getOwnActivities');
+			activitiesModel.activities.filter({ field: 'UserId', operator: 'eq', value: app.Users.currentUser.data.Id });
+			
+			//return activitiesModel.activities;
+		}
+		
+		var getAllActivities = function() {
+			console.log (' -> getAllActivities');
+			activitiesModel.activities.filter(null);
+			
+			//return activitiesModel.activities;
+		}
 
         return {
             activities: activitiesModel.activities,
             activitySelected: activitySelected,
+			getOwnActivities: getOwnActivities,
+			getAllActivities: getAllActivities,
             logout: logout
         };
 
