@@ -20,7 +20,7 @@ var filesys = function() {
 	function generateImagesArray(numOfImages) {
 		var paths = new Array();
 		for (var i = 0; i < numOfImages; i++) {
-			paths.push(folderPath + "\/" + fileName.replace("X", i));
+			paths.push(folderPath + fileName.replace("X", i));
 		}
 		
 		return paths;
