@@ -79,11 +79,8 @@ public class BarcodeScanner extends CordovaPlugin {
         try {
             for (int i = 0; i < args.length(); i++) {
                 String path = args.getString(i);
-                Log.e("Changing ", " " +path); //TODO REMOVE
-                  path =  path.substring(path.indexOf("/storage"), path.length());
-                  Log.e("to ", " "+path); //TODO REMOVE
-                    imgSavePaths[i] = path;
-                Log.e(" imgSavePaths ", " " + imgSavePaths[i]); //TODO remove
+                path =  path.substring(path.indexOf("/storage"), path.length());
+                imgSavePaths[i] = path;
             }
         } catch (JSONException e) {
             callbackContext.error("Bad args format for img save paths.");

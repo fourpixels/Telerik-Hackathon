@@ -62,10 +62,7 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("imagePaths")) { //TODO separate in constants
            imgPaths = getIntent().getExtras().getStringArray("imagePaths");
-           for (String string : imgPaths) { //TODO REMOVE
-               Log.e(" GOT : ", " " + string);
-           }
-        } else {
+         } else {
             setResult(RESULT_CANCELED, new Intent().putExtra("SCAN_RESULT", "Missing image paths"));
             finish();
         }
