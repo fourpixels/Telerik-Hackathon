@@ -20,7 +20,7 @@ var filesys = function() {
 	function generateImagesArray(numOfImages) {
 		var paths = new Array();
 		for (var i = 0; i < numOfImages; i++) {
-			paths.push(folderPath + "\/" + fileName.replace("X", i));
+			paths.push(folderPath + fileName.replace("X", i));
 		}
 		
 		return paths;
@@ -37,11 +37,10 @@ var filesys = function() {
 				
 				if (device.platform === "Android") {
 					getFolder(fileSystem, folderName, function(folder) {
-						filePath = folder.toURL() + "\/" + fileName;
 						folderPath = folder.toURL();
-						console.log('got folder:', filePath);
-						app.showAlert('got folder: ' + filePath);
-						app.divDebug('got folder: ' + filePath);
+						console.log('got folder:', folderPath);
+						app.showAlert('got folder: ' + folderPath);
+						app.divDebug('got folder: ' + folderPath);
 						readyCallback(folderPath);
 					}, function() {
 						app.showAlert('2');
