@@ -166,23 +166,30 @@
 		function DIVSHOOT() {
 			var that = this;
 			console.log ("KOPELENCE!");
-			app.divDebug('KOPELE');
 			
+			var numImages = appSettings.config.numberOfImagesToSave;
+			console.log('numImages', numImages);
+			app.showAlert('numImages' + numImages);
+			var fileSystem = app.fileSystem;
+			if (!fileSystem) {
+				showAlert('there is no app.fileSystem!' + (app ? 'true' : 'false'));
+			}
+			var paths = app.fileSystem.generateImagesArray(numImages);
+			console.log(paths);
+			app.showAlert(paths);
 			
 			window.plugins.barcodeScanner.scan(
 				function (result) {
 					if (!result.cancelled) {
 						alert("Completed.");
-						app.divDebug('Completed');
 						that._addMessageToLog(result.format + " | " + result.text);
 					}
 				},
 				function (error) {
 					alert("Error: " + error);
-					app.divDebug('Error');
 					console.log("Toast failed: " + error);
 				},
-				app.fileSystem.generateImagesArray(appSettings.config.numberOfImagesToSave)
+				paths
 			);
 		}
 	</script>

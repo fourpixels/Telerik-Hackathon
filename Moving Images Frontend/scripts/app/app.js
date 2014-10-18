@@ -104,7 +104,6 @@ var app = (function (win) {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
 		
-		showAlert('START THE APP!');
 		runFileSysTest();
 		
 		console.log('currentUser:', app.Users.currentUser);
@@ -116,8 +115,11 @@ var app = (function (win) {
 		fs.getSystem(fsReady);
 	}
 	function fsReady(path) {
-		divDebug('file system is ready!');
-		divDebug('get ' + appSettings.config.numberOfImagesToSave + ' images to display');
+		if (path)
+			divDebug('file system is ready!');
+		else
+			divDebug('file system failed!');
+		/*
 		var paths = fs.generateImagesArray(appSettings.config.numberOfImagesToSave);
 		if (!paths)
 			divDebug('paths is NULL FUCK U BITCH!');
@@ -125,7 +127,11 @@ var app = (function (win) {
 		divDebug('paths.length:' + paths.length);
 		for (var i = 0; i < paths.length; i++) {
 			divDebug(paths[i]);
-		}
+		}*/
+	}
+	
+	function fileSystem() {
+		return fs;
 	}
 
     // Handle "deviceready" event
@@ -188,7 +194,7 @@ var app = (function (win) {
 
     return {
 		divDebug: divDebug,
-		fileSystem: fs,
+		fileSystem: fileSystem,
         showAlert: showAlert,
         showError: showError,
         showConfirm: showConfirm,
