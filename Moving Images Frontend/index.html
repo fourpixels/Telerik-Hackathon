@@ -22,6 +22,8 @@
 		
 		<script src="scripts/lib/gifjs/gif.js" type="text/javascript"></script>
 		<script src="scripts/lib/filesys.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="Plugins/BarcodeScanner/www/barcodescanner.js"></script>
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
@@ -154,6 +156,32 @@
 			if (lv == vw) {
 				$("#my-drawer").data('kendoMobileDrawer').hide();
 			}
+			
+			if (vw == 'MOVE!') {
+				DIVSHOOT();
+			}
+		}
+		
+		
+		function DIVSHOOT() {
+			var that = this;
+			console.log ("KOPELENCE!");
+			app.divDebug('KOPELE');
+			return;
+			
+			window.plugins.barcodeScanner.scan(
+				function (result) {
+					if (!result.cancelled) {
+						alert("Completed.");
+						app.divDebug('Completed');
+						that._addMessageToLog(result.format + " | " + result.text);
+					}
+				},
+				function (error) {
+					alert("Error: " + error);
+					app.divDebug('Error');
+					console.log("Toast failed: " + error);
+			});
 		}
 	</script>
 		
@@ -169,7 +197,7 @@
 		<ul data-role="listview" data-type="group" data-click="drawerClick">
 			<li>Activities
 		 	 	<ul>
-					<li data-icon="camera"><a href="views/activitiesView.html" data-transition="none">MOVE!</a></li>
+					<li data-icon="camera"><a>MOVE!</a></li>
 					<li data-icon="contacts"><a href="views/activitiesOwnView.html" data-transition="none">My personal activities</a></li>
 					<li data-icon="globe"><a href="views/activitiesView.html" data-transition="none">Public activities</a></li>
 		  		</ul>
