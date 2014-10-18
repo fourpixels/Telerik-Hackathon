@@ -204,7 +204,6 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
                 Size size = cameraParams.getPreviewSize();
 
                 yuvImage = new YuvImage(data, cameraParams.getPreviewFormat(), size.width, size.height, null);
-//                File file = new File(Environment.getExternalStorageDirectory().getPath() + "/out" + picturesSaved + ".jpg"); //OLD
                 File file = new File(imgPaths[picturesSaved]);
                 FileOutputStream filecon;
                 try {
