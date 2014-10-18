@@ -8,6 +8,10 @@ var appSettings = {
         apiKey: 'fe729z153L3EjWu4', // Put your Backend Services API key here
         scheme: 'http'
     },
+	
+	config: {
+		numberOfImagesToSave: 8
+	},
 
     eqatec: {
         productKey: '0daeff28791544e68ecd7da20a133fc0',  // Put your EQATEC product key here

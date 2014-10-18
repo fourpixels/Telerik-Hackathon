@@ -1,5 +1,7 @@
 var app = (function (win) {
     'use strict';
+	
+	var fs;
 
     // Global error handling
     var showAlert = function(message, title, callback, throwStack) {
@@ -7,12 +9,17 @@ var app = (function (win) {
 			navigator.notification.alert(message, callback || function () {}, title, 'OK');
 		} catch (err) {
 			console.log(' >>> ', message);
+			alert(message);
 			
 			if (throwStack === true) {
 				console.log(err.stack);
 			}
 		}
     };
+	
+	var divDebug = function(message) {
+		$('#debugDiv').append('<p>' + message + '</p>');
+	};
 
     var showError = function(message) {
         showAlert(message, 'Error occured', null, true);
@@ -97,9 +104,29 @@ var app = (function (win) {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
 		
+		showAlert('START THE APP!');
+		runFileSysTest();
 		
 		console.log('currentUser:', app.Users.currentUser);
     };
+	
+	
+	function runFileSysTest() {
+		fs = filesys();
+		fs.getSystem(fsReady);
+	}
+	function fsReady(path) {
+		divDebug('file system is ready!');
+		divDebug('get ' + appSettings.config.numberOfImagesToSave + ' images to display');
+		var paths = fs.generateImagesArray(appSettings.config.numberOfImagesToSave);
+		if (!paths)
+			divDebug('paths is NULL FUCK U BITCH!');
+		
+		divDebug('paths.length:' + paths.length);
+		for (var i = 0; i < paths.length; i++) {
+			divDebug(paths[i]);
+		}
+	}
 
     // Handle "deviceready" event
     document.addEventListener('deviceready', onDeviceReady, false);
@@ -160,6 +187,7 @@ var app = (function (win) {
     }());
 
     return {
+		divDebug: divDebug,
         showAlert: showAlert,
         showError: showError,
         showConfirm: showConfirm,

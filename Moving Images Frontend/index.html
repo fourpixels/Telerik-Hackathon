@@ -21,6 +21,7 @@
         <script src="scripts/app/add-comment.js" type="text/javascript"></script>
 		
 		<script src="scripts/lib/gifjs/gif.js" type="text/javascript"></script>
+		<script src="scripts/lib/filesys.js" type="text/javascript"></script>
 
         <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700,800" rel="stylesheet" type="text/css" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
@@ -44,6 +45,10 @@
                     <li class="password"><input type="password" id="loginPassword" placeholder="Password" required validationMessage="Password is required!" /></li>
                 </ul>
             </form>
+			
+			<div id="debugDiv">
+				
+			</div>
 			
 			
 			<div id="gifjstest">
@@ -74,7 +79,7 @@
 							}
 						}
 						
-						console.log('all images loaded');
+						//console.log('all images loaded');
 						if (buildStarted)
 							return;
 						buildStarted = true;
