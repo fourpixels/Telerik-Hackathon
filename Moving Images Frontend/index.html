@@ -146,7 +146,6 @@
 		 */
 		
 		function drawerClick(e) {
-			console.log("aaaaaaaaaaaaaaaaaaaaaaa");
 			console.log(app);
 			var lv = app.mobileApp.view().title;
 			console.log('a', e);
@@ -165,7 +164,6 @@
 		
 		function DIVSHOOT() {
 			var that = this;
-			console.log ("KOPELENCE!");
 			
 			var numImages = appSettings.config.numberOfImagesToSave;
 			console.log('numImages', numImages);
@@ -174,7 +172,7 @@
 			if (!fileSystem) {
 				showAlert('there is no app.fileSystem!' + (app ? 'true' : 'false'));
 			}
-			var paths = app.fileSystem.generateImagesArray(numImages);
+			var paths = app.fileSystem().generateImagesArray(numImages);
 			console.log(paths);
 			app.showAlert(paths);
 			
@@ -187,7 +185,6 @@
 				},
 				function (error) {
 					alert("Error: " + error);
-					console.log("Toast failed: " + error);
 				},
 				paths
 			);
