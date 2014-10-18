@@ -5,12 +5,12 @@
 var appSettings = {
 
     everlive: {
-        apiKey: '$EVERLIVE_API_KEY$', // Put your Backend Services API key here
+        apiKey: 'fe729z153L3EjWu4', // Put your Backend Services API key here
         scheme: 'http'
     },
 
     eqatec: {
-        productKey: '$EQATEC_PRODUCT_KEY$',  // Put your EQATEC product key here
+        productKey: '0daeff28791544e68ecd7da20a133fc0',  // Put your EQATEC product key here
         version: '1.0.0.0' // Put your application version here
     },
     
