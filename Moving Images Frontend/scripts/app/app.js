@@ -222,7 +222,7 @@ var app = (function (win) {
 		var scaleFactor = iWidth / newWidth;
 		iWidth = newWidth * 2;
 		iHeight = (iHeight / scaleFactor) * 2;
-		
+		 
 		var gif = new GIF({
 			workers: 4,
 			quality: 5,
