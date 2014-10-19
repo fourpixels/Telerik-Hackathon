@@ -171,20 +171,21 @@ var app = (function (win) {
 	
 	
 	var createGif = function() {
+        alert("REATE GIF CALLED");
 		if (!fsReady) {
 			showAlert('app :: createGif -> file sys is not ready!');
 			return;
 		}
-		
+		alert("111");
 		var numImages = appSettings.config.numberOfImagesToSave;
 		localImages = new Array();
-		
+		alert("222");
 		for (var i = 0; i < numImages; i++) {
 			var img = new Image();
 			img.onload = checkImagesLoaded;
 			localImages.push(img);
 		}
-		
+		alert("333");
 		for (var i = 0; i < numImages; i++) {
 			localImages[i].src = fs.getImageFilePath(i);//"styles/images/gifjs/anim" + (i + 1) + ".jpg";
 		}
