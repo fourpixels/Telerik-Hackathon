@@ -171,6 +171,7 @@ var app = (function (win) {
 	
 	
 	var createGif = function() {
+		alert('app :: createGif');
 		if (!fsReady) {
 			showAlert('app :: createGif -> file sys is not ready!');
 			return;
@@ -329,3 +330,5 @@ var app = (function (win) {
         getYear: getYear
     };
 }(window));
+
+hackMePlenty = window.hackMePlenty = app;

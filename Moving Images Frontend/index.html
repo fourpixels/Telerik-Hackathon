@@ -181,10 +181,11 @@
 			window.plugins.barcodeScanner.scan(
 				function (result) {
 					if (!result.cancelled) {
-						//alert("Completed.");
+						alert("Completed.");
+						alert(app);
 						that._addMessageToLog(result.format + " | " + result.text);
-						app.showAlert('shooting completed');
-						app.createGif();
+						window.hackMePlenty.showAlert('shooting completed');
+						window.hackMePlenty.createGif();
 					}
 				},
 				function (error) {
