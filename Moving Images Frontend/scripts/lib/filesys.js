@@ -66,7 +66,7 @@ var filesys = function() {
 			function(e) {
 				console.log("failed to get filesystem");
 				console.log(e);
-				app.showAlert('failed to get filesys');
+				//app.showAlert('failed to get filesys');
 				readyCallback();
 			}
 		);

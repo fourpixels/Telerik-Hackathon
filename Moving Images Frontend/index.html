@@ -3,6 +3,8 @@
     <head>
         <title></title>
         <meta charset="utf-8" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+		<!-- <meta name="viewport" content="target-densitydpi=device-dpi; user-scalable=no" />  -->
         <script src="cordova.js"></script>
         <script src="kendo/js/jquery.min.js"></script>
         <script src="kendo/js/kendo.mobile.min.js"></script>
@@ -168,20 +170,21 @@
 			
 			var numImages = appSettings.config.numberOfImagesToSave;
 			console.log('numImages', numImages);
-			app.showAlert('numImages' + numImages);
+			
 			var fileSystem = app.fileSystem;
 			if (!fileSystem) {
 				showAlert('there is no app.fileSystem!' + (app ? 'true' : 'false'));
 			}
 			var paths = app.fileSystem().generateImagesArray(numImages);
 			console.log(paths);
-			app.showAlert(paths);
 			
 			window.plugins.barcodeScanner.scan(
 				function (result) {
 					if (!result.cancelled) {
-						alert("Completed.");
+						//alert("Completed.");
 						that._addMessageToLog(result.format + " | " + result.text);
+						
+						app.createGif();
 					}
 				},
 				function (error) {

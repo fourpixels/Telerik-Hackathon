@@ -6,6 +6,8 @@ var app = app || {};
 
 app.AddActivity = (function () {
     'use strict'
+	
+	var activityPublishedCallback;
 
     var addActivityViewModel = (function () {
         
@@ -45,7 +47,8 @@ app.AddActivity = (function () {
             }
         };
 		
-		var publicSaveActivity = function(gif, text) {
+		var publicSaveActivity = function(gif, callback, text) {
+			activityPublishedCallback = callback;
 			var reader = new FileReader();
 			reader.onload = function(event){
 				console.log('reader ready:', event.target.result);
@@ -71,6 +74,8 @@ app.AddActivity = (function () {
 					});
 					
 					activities.sync();
+					
+					activityPublishedCallback();
 				});
 			};
 			reader.readAsDataURL(gif);

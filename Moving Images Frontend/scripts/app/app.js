@@ -109,18 +109,56 @@ var app = (function (win) {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
 		
+		//fixViewPort();
+		
 		fs = filesys();
 		fs.getSystem(fsReadyCallback);
 		
 		console.log('currentUser:', app.Users.currentUser);
     };
 	
+	
+	function fixViewPort() {
+		        var orgWidth; 
+        var orgHeight; 
+    if(window.localStorage.getItem('orgWidth')==null){ 
+            orgWidth=screen.width; 
+            orgHeight=screen.height; 
+            window.localStorage.setItem('orgWidth',orgWidth) 
+            window.localStorage.setItem('orgHeight',orgHeight) 
+    }else { 
+            orgWidth=parseInt(window.localStorage.getItem('orgWidth')); 
+            orgHeight=parseInt(window.localStorage.getItem('orgHeight')); 
+            if(orgWidth<screen.width){ 
+                      orgWidth=screen.width; 
+                      orgHeight=screen.height; 
+                      window.localStorage.setItem('orgWidth',orgWidth) 
+                      window.localStorage.setItem('orgHeight',orgHeight) 
+            } 
+    } 
+
+  var nScale=orgWidth/320; 
+  if(orgHeight/480<nScale)nScale=orgHeight/480; 
+  var transx=((orgWidth-320)/2)/nScale; 
+  var transy=((orgHeight-480)/2)/nScale; 
+  if(orgHeight/nScale-480>0){ 
+          transy=transy-(orgHeight/nScale-480)/2 
+  } 
+  if(nScale!=1){ 
+        document.body.style.webkitTransform="scale("+nScale+","+nScale+") translate("+transx+"px, "+transy+"px)"; 
+        document.body.style.width="320px"; 
+        document.body.style.height="480px"; 
+  } 
+
+	}
+	
+	
 	function fsReadyCallback(path) {
 		fsReady = true;
 		
-		if (path)
+		/*if (path)
 			createGif();
-		/*
+		
 		var paths = fs.generateImagesArray(appSettings.config.numberOfImagesToSave);
 		if (!paths)
 			divDebug('paths is NULL FUCK U BITCH!');
@@ -172,15 +210,25 @@ var app = (function (win) {
 		console.log('build started', localImages);
 		showAlert('build started');
 		
+		var isLandscape = localImages[0].clientWidth > localImages[0].clientHeight;
+		var iWidth = isLandscape ? 1920 : 1088;
+		var iHeight = isLandscape ? 1088 : 1920;
+		var newWidth = 310;
+		var scaleFactor = iWidth / newWidth;
+		iWidth = newWidth;
+		iHeight = iHeight / scaleFactor;
+		
 		var gif = new GIF({
 			workers: 2,
-			quality: 10
+			quality: 10,
+			width: iWidth,
+			height: iHeight
 		});
 		
-		var isLandscape = localImages[0].clientWidth > localImages[0].clientHeight;
+		
 		
 		for (var i = 0; i < numImages; i++) {
-			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100, width: isLandscape ? 850 : 480, height: isLandscape ? 480 : 850 });
+			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100 });
 		}
 		
 			
@@ -190,12 +238,19 @@ var app = (function (win) {
 			showAlert('build finished');
 			$('#gifjs1').attr('src', URL.createObjectURL(blob));
 			pictureToUpload = blob; // save the image so it can be uploaded later
+			
+			app.AddActivity.publicSaveActivity(pictureToUpload, onActivityPublished, 'test text');
+			
 			//window.open(URL.createObjectURL(blob));
 		});
 		
 		gif.render();
 	}
 	
+	function onActivityPublished() {
+		console.log('YES MADAFAKA');
+		showAlert('YES MADAFAKA');
+	}
 	
 	
 	function fileSystem() {
@@ -262,6 +317,7 @@ var app = (function (win) {
 
     return {
 		divDebug: divDebug,
+		createGif: createGif,
 		fileSystem: fileSystem,
         showAlert: showAlert,
         showError: showError,
