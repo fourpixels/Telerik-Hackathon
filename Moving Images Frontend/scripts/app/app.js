@@ -1,5 +1,5 @@
 pictureToUpload = '';
- 
+
 var app = (function (win) {
     'use strict';
 	
@@ -19,7 +19,7 @@ var app = (function (win) {
 			if (throwStack === true) {
 				console.log(err.stack);
 			}
-		} 
+		}
     };
 	
 	var divDebug = function(message) {
@@ -118,9 +118,6 @@ var app = (function (win) {
 	function fsReadyCallback(path) {
 		fsReady = true;
 		
-		showAlert('fsReady ' + path);
-		divDebug('fsReady ' + path);
-		
 		if (path)
 			createGif();
 		/*
@@ -136,11 +133,8 @@ var app = (function (win) {
 	
 	
 	function createGif() {
-		showAlert('createGif');
-		
-		
 		if (!fsReady) {
-			showAlert('file sys is not ready!');
+			//showAlert('file sys is not ready!');
 			return;
 		}
 		
@@ -151,12 +145,10 @@ var app = (function (win) {
 			var img = new Image();
 			img.onload = checkImagesLoaded;
 			localImages.push(img);
-			divDebug('push images' + i);
 		}
 		
 		for (var i = 0; i < numImages; i++) {
 			localImages[i].src = fs.getImageFilePath(i);//"styles/images/gifjs/anim" + (i + 1) + ".jpg";
-			divDebug(localImages[i].src);
 		}
 	}
 	
@@ -168,7 +160,6 @@ var app = (function (win) {
 			if (!localImages[i].complete) {
 				console.log('still loading', i);
 				console.log(localImages);
-				showAlert('still loading' + localImages[i].src);
 				return;
 			}
 		}
@@ -186,8 +177,10 @@ var app = (function (win) {
 			quality: 10
 		});
 		
+		var isLandscape = localImages[0].clientWidth > localImages[0].clientHeight;
+		
 		for (var i = 0; i < numImages; i++) {
-			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100 });
+			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100, width: isLandscape ? 850 : 480, height: isLandscape ? 480 : 850 });
 		}
 		
 			

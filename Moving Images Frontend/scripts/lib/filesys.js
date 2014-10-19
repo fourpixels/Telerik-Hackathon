@@ -36,25 +36,17 @@ var filesys = function() {
 			function(fileSystem) {
 				console.log("gotFS");
 				console.log('platform:', device.platform);
-				app.showAlert('gotFS: ' + device.platform);
-				app.divDebug('gotFS: ' + device.platform);
 				
 				if (device.platform === "Android") {
 					getFolder(fileSystem, folderName, function(folder) {
 						folderPath = folder.toURL();
 						console.log('got folder:', folderPath);
-						app.showAlert('got folder: ' + folderPath);
-						app.divDebug('got folder: ' + folderPath);
 						readyCallback(folderPath);
 					}, function() {
-						app.showAlert('2');
-						app.divDebug('2');
 						console.log("failed to get folder");
 						readyCallback();
 					});
 				} else {
-					app.showAlert('3');
-					app.divDebug('3');
 					var filePath;
 					var urlPath = fileSystem.root.toURL();
 					if (device.platform == "Win32NT") {
@@ -75,7 +67,6 @@ var filesys = function() {
 				console.log("failed to get filesystem");
 				console.log(e);
 				app.showAlert('failed to get filesys');
-				app.divDebug('failed to get filesys');
 				readyCallback();
 			}
 		);
