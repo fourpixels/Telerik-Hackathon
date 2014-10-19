@@ -41,9 +41,8 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity
                 android:name="com.google.zxing.PreviewActivity"
-                android:screenOrientation="portrait"
                 android:clearTaskOnLaunch="true"
-                android:configChanges="orientation|keyboardHidden"
+                android:configChanges="keyboardHidden"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 android:windowSoftInputMode="stateAlwaysHidden"
                 android:exported="false">

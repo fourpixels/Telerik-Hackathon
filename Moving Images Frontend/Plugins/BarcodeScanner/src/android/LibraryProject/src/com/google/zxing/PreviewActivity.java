@@ -3,10 +3,14 @@ package com.google.zxing;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
@@ -56,6 +60,9 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
     private String[] imgPaths;
     private ProgressBar loading;
 
+    private int rotation = 0;
+    private Bitmap imageToRotate;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,21 +111,17 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
     protected void onPause() {
         camera.setPreviewCallback(null);
         camera.stopPreview();
+        camera.release();
+        camera = null;
         super.onPause();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (camera != null) {
-            camera.release();
-        }
-        camera = null;
-        super.onDestroy();
-    }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        camera.stopPreview();
+        if (camera != null) {
+            camera.stopPreview();
+        }
         previewCamera();
     }
 
@@ -150,12 +153,17 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
         List<Size> supportedPreviewSizes = camera.getParameters().getSupportedPreviewSizes();
         Size biggestSupportedSize = getOptimalPreviewSize(supportedPreviewSizes, displayWidth, displayHeight);
         cameraParams.setPreviewSize(biggestSupportedSize.width, biggestSupportedSize.height);
-        if (display.getRotation() == Surface.ROTATION_0) {
+        if (display.getRotation() == Surface.ROTATION_0) { //TODO REFACTOR
             camera.setDisplayOrientation(90);
+            rotation = 90;
         } else if (display.getRotation() == Surface.ROTATION_180) {
+            rotation = 270;
             camera.setDisplayOrientation(270);
         } else if (display.getRotation() == Surface.ROTATION_270) {
+            rotation = 180;
             camera.setDisplayOrientation(180);
+        } else {
+            rotation = 0;
         }
         camera.setParameters(cameraParams);
     }
@@ -209,9 +217,17 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
                     picturesSaved++;
                     if (picturesSaved >= imgPaths.length) {
                         setResult(RESULT_OK, new Intent().putExtra("SCAN_RESULT", "Success."));
+                        rotatePicturesIfNecessary();
                         stopTakingPictures();
                     }
+                    filecon.flush();
+                    filecon.close(); 
                 } catch (FileNotFoundException e) {
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    setResult(RESULT_CANCELED, new Intent().putExtra("SCAN_RESULT", "Error saving images"));
+                    stopTakingPictures();
+                    e.printStackTrace();
+                } catch (IOException e) { // TODO TAKE THIS PART
                     Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     setResult(RESULT_CANCELED, new Intent().putExtra("SCAN_RESULT", "Error saving images"));
                     stopTakingPictures();
@@ -221,6 +237,31 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
         }
     };
 
+    private void rotatePicturesIfNecessary() {
+        if (rotation % 360 != 0) {
+            try {
+                for (String imgPath : imgPaths) {
+                    imageToRotate = BitmapFactory.decodeFile(imgPath);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(rotation);
+                    imageToRotate = Bitmap.createBitmap(imageToRotate, 0, 0, imageToRotate.getWidth(), imageToRotate.getHeight(), matrix, true);
+                    FileOutputStream out = new FileOutputStream(imgPath);
+                    imageToRotate.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    out.flush();
+                    out.close();
+                }
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                stopTakingPictures();
+                e.printStackTrace();
+            } catch (IOException e) {
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                stopTakingPictures();
+                e.printStackTrace();
+            }
+        }
+    }
+    
     private void stopTakingPictures() {
         takePictureRequest = false;
         picturesSaved = 0;
@@ -233,7 +274,9 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
         switch(keyCode){
         case KeyEvent.KEYCODE_BACK:
             setResult(RESULT_CANCELED, new Intent().putExtra("SCAN_RESULT", "Cancelled"));
-            return false; //let the app continue
+            return true;
+        default:
+            break;
         }
         return super.onKeyDown(keyCode, event);
     }
