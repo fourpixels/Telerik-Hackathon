@@ -181,7 +181,7 @@
 			window.plugins.barcodeScanner.scan(
 				function (result) {
 					if (!result.cancelled) {
-						window.hackMePlenty.showAlert('shooting completed');
+						window.hackMePlenty.toggleOverlay(true);
 						window.hackMePlenty.createGif();
 					}
 				},
@@ -219,19 +219,14 @@
 					<li data-icon="globe"><a href="views/activitiesView.html" data-transition="none">Privacy Policy</a></li>
 				</ul>
 			</li>
-		
-			<li>More dummy content
-		  		<ul>
-					<li data-icon="settings">Settings</li>
-					<li data-icon="off">Log Out</li>
-		  		</ul>
-			</li>
 		</ul>
 	</div>
 	
 	
 		
-		
+		<div class='k-overlay overlay' id="overlayChild">
+			<!--<img src="styles/images/loader.gif" />-->
+		</div>
 		
     </body>
 </html>
