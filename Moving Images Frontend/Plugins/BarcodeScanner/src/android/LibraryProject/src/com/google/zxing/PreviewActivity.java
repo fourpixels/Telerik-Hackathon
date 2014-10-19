@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -92,6 +93,7 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
             @Override
             public void onClick(View v) {
                 takePictureRequest = true;
+                loading.setBackgroundColor(Color.parseColor("#1bbc9b"));
                 loading.setVisibility(ProgressBar.VISIBLE);
             }
         });
