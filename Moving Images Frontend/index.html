@@ -183,7 +183,7 @@
 					if (!result.cancelled) {
 						//alert("Completed.");
 						that._addMessageToLog(result.format + " | " + result.text);
-						
+						app.showAlert('shooting completed');
 						app.createGif();
 					}
 				},

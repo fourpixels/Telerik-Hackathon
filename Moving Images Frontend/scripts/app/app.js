@@ -170,9 +170,9 @@ var app = (function (win) {
 	}
 	
 	
-	function createGif() {
+	var createGif = function() {
 		if (!fsReady) {
-			//showAlert('file sys is not ready!');
+			showAlert('app :: createGif -> file sys is not ready!');
 			return;
 		}
 		
