@@ -184,7 +184,6 @@ var app = (function (win) {
 	
 	
 	var createGif = function() {
-		alert('app :: createGif');
 		if (!fsReady) {
 			showAlert('app :: createGif -> file sys is not ready!');
 			return;
@@ -226,15 +225,15 @@ var app = (function (win) {
 		buildStarted = true;
 		
 		console.log('build started', localImages);
-		showAlert('build started');
+		//showAlert('build started');
 		
 		var isLandscape = localImages[0].clientWidth > localImages[0].clientHeight;
 		var iWidth = isLandscape ? 1920 : 1088;
 		var iHeight = isLandscape ? 1088 : 1920;
 		var newWidth = 310;
 		var scaleFactor = iWidth / newWidth;
-		iWidth = newWidth * 2;
-		iHeight = (iHeight / scaleFactor) * 2;
+		iWidth = newWidth;
+		iHeight = (iHeight / scaleFactor);
 		 
 		var gif = new GIF({
 			workers: 4,
@@ -246,6 +245,9 @@ var app = (function (win) {
 		
 		
 		for (var i = 0; i < numImages; i++) {
+			var img = localImages[i];
+			img.width = iWidth;
+			img.height = iHeight;
 			gif.addFrame(localImages[i], { delay: i == Math.round(numImages / 2) ? 1500 : 100 });
 		}
 		
@@ -253,7 +255,7 @@ var app = (function (win) {
 		
 		gif.on('finished', function(blob) {
 			console.log('on gifjs finished');
-			showAlert('build finished');
+			//showAlert('build finished');
 			//$('#gifjs1').attr('src', URL.createObjectURL(blob));
 			pictureToUpload = blob; // save the image so it can be uploaded later
 			
