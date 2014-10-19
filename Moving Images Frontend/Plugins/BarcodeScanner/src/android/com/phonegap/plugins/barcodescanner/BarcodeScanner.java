@@ -77,9 +77,11 @@ public class BarcodeScanner extends CordovaPlugin {
 
         imgSavePaths = new String[args.length()];
         try {
-        for (int i = 0; i < args.length(); i++) {
-                imgSavePaths[i] = args.getString(i);
-        }
+            for (int i = 0; i < args.length(); i++) {
+                String path = args.getString(i);
+                path =  path.substring(path.indexOf("/storage"), path.length());
+                imgSavePaths[i] = path;
+            }
         } catch (JSONException e) {
             callbackContext.error("Bad args format for img save paths.");
             e.printStackTrace();

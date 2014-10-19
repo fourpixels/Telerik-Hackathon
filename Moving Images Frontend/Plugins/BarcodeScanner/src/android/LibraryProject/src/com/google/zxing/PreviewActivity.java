@@ -15,6 +15,7 @@ import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Surface;
@@ -61,7 +62,7 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("imagePaths")) { //TODO separate in constants
            imgPaths = getIntent().getExtras().getStringArray("imagePaths");
-        } else {
+         } else {
             setResult(RESULT_CANCELED, new Intent().putExtra("SCAN_RESULT", "Missing image paths"));
             finish();
         }
@@ -200,13 +201,13 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
                 Size size = cameraParams.getPreviewSize();
 
                 yuvImage = new YuvImage(data, cameraParams.getPreviewFormat(), size.width, size.height, null);
-                File file = new File(Environment.getExternalStorageDirectory().getPath() + "/out" + picturesSaved + ".jpg"); //TODO use given paths, eg imgPaths[picturesSaved] 
+                File file = new File(imgPaths[picturesSaved]);
                 FileOutputStream filecon;
                 try {
                     filecon = new FileOutputStream(file);
                     yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 90, filecon);
                     picturesSaved++;
-                    if (picturesSaved > imgPaths.length) {
+                    if (picturesSaved >= imgPaths.length) {
                         setResult(RESULT_OK, new Intent().putExtra("SCAN_RESULT", "Success."));
                         stopTakingPictures();
                     }
