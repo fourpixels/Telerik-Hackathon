@@ -9,7 +9,6 @@
             My personal activities
             <!--<a class="nav-button nav-button-back hide-text" data-align="left" data-role="backbutton" data-click="app.Activities.logout">Log out</a>-->
 			<a class="nav-button nav-button-add hide-text" data-align="left" data-role="button" href="#my-drawer" data-rel="drawer">Menu</a>
-			<a class="nav-button nav-button-back hide-text" data-align="left" data-role="button" data-click="app.Activities.getOwnActivities">Log out</a>
 			<a class="nav-button nav-button-add hide-text" data-align="right" data-role="button" href="views/addActivityView.html">Add</a>
         </div>
     </div>
@@ -23,14 +22,15 @@
 
 <!-- Activities ListView Template -->
 <script type="text/x-kendo-template" id="activityTemplate">
-    <div data-role="touch" data-bind="events: { tap: activitySelected }" class="cf">
+    <div data-role="touch"  class="cf"> <!-- data-bind="events: { tap: activitySelected }" -->
         <div class="user-avatar">
             <img data-bind="attr:{src: User().PictureUrl}" alt="styles/images/avatar.png" />
         </div>
         <div class="activity-content">
             <h2 class="person-name">${User().DisplayName}</h2>
             <span class="time-span">${CreatedAtFormatted()}</span>
-            <a class="user-share-txt">${Text}</a>
+             <!--<a class="user-share-txt">${Text}</a>-->
+			<img id="picture" class="picture" data-bind="attr:{src: PictureUrl()}" width="100%"/>
         </div>
     </div>
 </script>

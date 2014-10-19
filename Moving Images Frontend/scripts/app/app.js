@@ -177,6 +177,8 @@ var app = (function (win) {
 			return;
 		}
 		
+		buildStarted = false;
+		
 		var numImages = appSettings.config.numberOfImagesToSave;
 		localImages = new Array();
 		
@@ -204,8 +206,10 @@ var app = (function (win) {
 		}
 		
 		//console.log('all images loaded');
-		if (buildStarted)
+		if (buildStarted) {
 			return;
+		}
+			
 		buildStarted = true;
 		
 		console.log('build started', localImages);
@@ -220,8 +224,8 @@ var app = (function (win) {
 		iHeight = iHeight / scaleFactor;
 		
 		var gif = new GIF({
-			workers: 2,
-			quality: 10,
+			workers: 4,
+			quality: 5,
 			width: iWidth,
 			height: iHeight
 		});
@@ -229,15 +233,15 @@ var app = (function (win) {
 		
 		
 		for (var i = 0; i < numImages; i++) {
-			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100 });
+			gif.addFrame(localImages[i], { delay: i == Math.round(numImages / 2) ? 1500 : 100 });
 		}
 		
-			
+		
 		
 		gif.on('finished', function(blob) {
 			console.log('on gifjs finished');
 			showAlert('build finished');
-			$('#gifjs1').attr('src', URL.createObjectURL(blob));
+			//$('#gifjs1').attr('src', URL.createObjectURL(blob));
 			pictureToUpload = blob; // save the image so it can be uploaded later
 			
 			app.AddActivity.publicSaveActivity(pictureToUpload, onActivityPublished, 'test text');
