@@ -25,3 +25,7 @@
     background-image:url('images/loader.gif');
 	z-order: 99999;
 }
+
+.nav-button-menu {
+	background-image: url('images/icon-menu.png'); 
+}

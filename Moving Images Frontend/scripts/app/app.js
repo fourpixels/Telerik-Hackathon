@@ -232,8 +232,8 @@ var app = (function (win) {
 		var iHeight = isLandscape ? 1088 : 1920;
 		var newWidth = 310;
 		var scaleFactor = iWidth / newWidth;
-		iWidth = newWidth;
-		iHeight = (iHeight / scaleFactor);
+		//iWidth = newWidth;
+		//iHeight = (iHeight / scaleFactor);
 		 
 		var gif = new GIF({
 			workers: 4,
@@ -246,8 +246,8 @@ var app = (function (win) {
 		
 		for (var i = 0; i < numImages; i++) {
 			var img = localImages[i];
-			img.width = iWidth;
-			img.height = iHeight;
+			//img.width = iWidth;
+			//img.height = iHeight;
 			gif.addFrame(localImages[i], { delay: i == Math.round(numImages / 2) ? 1500 : 100 });
 		}
 		
