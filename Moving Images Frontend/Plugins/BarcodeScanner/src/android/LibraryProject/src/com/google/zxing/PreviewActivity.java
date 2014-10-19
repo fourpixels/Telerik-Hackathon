@@ -93,7 +93,7 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback 
             @Override
             public void onClick(View v) {
                 takePictureRequest = true;
-                loading.setBackgroundColor(Color.parseColor("#1bbc9b"));
+                loading.setBackgroundColor(Color.argb(0, 0, 0, 0));
                 loading.setVisibility(ProgressBar.VISIBLE);
             }
         });
