@@ -4,7 +4,7 @@
 <h2>Team: 2 Wise men</h2>
 <p>Andrey Popov, Ilian Nikolov</p>
 
-<p>Living Moments - Images that come alive</p>
+<h2>Living Moments - Images that come alive</h2>
 
 <h3>Description</h3>
 
