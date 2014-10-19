@@ -220,8 +220,8 @@ var app = (function (win) {
 		var iHeight = isLandscape ? 1088 : 1920;
 		var newWidth = 310;
 		var scaleFactor = iWidth / newWidth;
-		iWidth = newWidth;
-		iHeight = iHeight / scaleFactor;
+		iWidth = newWidth * 2;
+		iHeight = (iHeight / scaleFactor) * 2;
 		
 		var gif = new GIF({
 			workers: 4,
