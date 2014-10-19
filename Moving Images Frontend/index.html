@@ -181,9 +181,6 @@
 			window.plugins.barcodeScanner.scan(
 				function (result) {
 					if (!result.cancelled) {
-						alert("Completed.");
-						alert(JSON.stringify(app));
-						that._addMessageToLog(result.format + " | " + result.text);
 						window.hackMePlenty.showAlert('shooting completed');
 						window.hackMePlenty.createGif();
 					}
@@ -194,10 +191,6 @@
 				paths
 			);
 			
-			function _addMessageToLog(message) {
-				alert ('_addMessageToLog');
-				alert (JSON.stringify(that));
-			}
 		}
 	</script>
 		
