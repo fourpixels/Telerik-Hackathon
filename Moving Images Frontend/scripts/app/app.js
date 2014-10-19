@@ -7,6 +7,16 @@ var app = (function (win) {
 	var fsReady = false;
 	var localImages;
 	var buildStarted;
+	
+	var overlay;
+	
+	function toggleOverlay(state) {
+		if (state) {
+			$(overlay).show();
+		} else {
+			$(overlay).hide();
+		}
+	}
 
     // Global error handling
     var showAlert = function(message, title, callback, throwStack) {
@@ -110,6 +120,9 @@ var app = (function (win) {
         }
 		
 		//fixViewPort();
+		
+		overlay = $('#overlayChild');
+		toggleOverlay(false);
 		
 		fs = filesys();
 		fs.getSystem(fsReadyCallback);
@@ -253,8 +266,8 @@ var app = (function (win) {
 	}
 	
 	function onActivityPublished() {
-		console.log('YES MADAFAKA');
-		showAlert('YES MADAFAKA');
+		console.log('onActivityPublished');
+		toggleOverlay(false);
 	}
 	
 	
@@ -323,6 +336,7 @@ var app = (function (win) {
     return {
 		divDebug: divDebug,
 		createGif: createGif,
+		toggleOverlay: toggleOverlay,
 		fileSystem: fileSystem,
         showAlert: showAlert,
         showError: showError,
