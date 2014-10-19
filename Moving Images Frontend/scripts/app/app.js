@@ -1,5 +1,5 @@
 pictureToUpload = '';
-
+ 
 var app = (function (win) {
     'use strict';
 	
@@ -19,7 +19,7 @@ var app = (function (win) {
 			if (throwStack === true) {
 				console.log(err.stack);
 			}
-		}
+		} 
     };
 	
 	var divDebug = function(message) {

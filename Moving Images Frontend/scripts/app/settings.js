@@ -1,5 +1,5 @@
 /**
- * Application Settings
+ * Application Settings 
  */
 
 var appSettings = {

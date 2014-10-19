@@ -1,5 +1,5 @@
 /**
- * Login view model
+ * Login view model 
  */
 
 var app = app || {};

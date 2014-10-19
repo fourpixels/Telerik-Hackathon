@@ -1,5 +1,5 @@
 /**
- * Activities view model
+ * Activities view model 
  */
 
 var app = app || {};

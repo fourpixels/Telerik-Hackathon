@@ -1,4 +1,4 @@
-var filesys = function() {
+var filesys = function() { 
 	
 	var folderName = 'testbtch';//"telerik/moving/images";
 	var fileName = "imageX.jpg";    
