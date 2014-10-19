@@ -10,7 +10,7 @@ var appSettings = {
     },
 	
 	config: {
-		numberOfImagesToSave: 8
+		numberOfImagesToSave: 9
 	},
 
     eqatec: {
@@ -23,7 +23,7 @@ var appSettings = {
     },
 
     facebook: {
-        appId: '1408629486049918', // Put your Facebook App ID here
+        appId: '342348155946740', // Put your Facebook App ID here
         redirectUri: 'https://www.facebook.com/connect/login_success.html' // Put your Facebook Redirect URI here
     },
 

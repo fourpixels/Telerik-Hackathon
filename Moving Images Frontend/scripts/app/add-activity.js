@@ -44,12 +44,44 @@ app.AddActivity = (function () {
                 activities.sync();
             }
         };
+		
+		var publicSaveActivity = function(gif, text) {
+			var reader = new FileReader();
+			reader.onload = function(event){
+				console.log('reader ready:', event.target.result);
+				
+				app.everlive.Files.create({
+					Filename: Math.random().toString(36).substring(2, 15) + ".gif",
+					ContentType: "image/gif",
+					base64: event.target.result.substr(event.target.result.lastIndexOf('base64,') + 7)
+				}).then(function(data) {
+					console.log(' >>> everlive result:');
+					console.log(data);
+					
+					var activities = app.Activities.activities;
+					var activity = activities.add();
+					
+					activity.Text = text;
+					activity.Picture = data.result.Id;
+					activity.UserId = app.Users.currentUser.get('data').Id;
+					
+					activities.one('sync', function (e) {
+						console.log(' >>> SYNC OK!');
+						console.log(e);
+					});
+					
+					activities.sync();
+				});
+			};
+			reader.readAsDataURL(gif);
+		}
         
         return {
             init: init,
             show: show,
             me: app.Users.currentUser,
-            saveActivity: saveActivity
+            saveActivity: saveActivity,
+			publicSaveActivity: publicSaveActivity
         };
         
     }());

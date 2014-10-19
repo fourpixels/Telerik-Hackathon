@@ -57,7 +57,7 @@
 				<img id="gifjs1"  />
 				
 				<script>
-					gifimages = new Array();
+					/*gifimages = new Array();
 					
 					for (var i = 1; i < 5; i++) {
 						var img = new Image();
@@ -92,7 +92,7 @@
 						});
 						
 						for (var i = 0; i < 4; i++) {
-							gif.addFrame(gifimages[i], {delay:100});
+							gif.addFrame(gifimages[i], { delay: i == 2 ? 1500 : 100 });
 						}
 						
 							
@@ -100,13 +100,14 @@
 						gif.on('finished', function(blob) {
 							console.log('on gifjs finished');
 							$('#gifjs1').attr('src', URL.createObjectURL(blob));
+							pictureToUpload = blob; // save the image so it can be uploaded later
 							//window.open(URL.createObjectURL(blob));
 						});
 						
 						gif.render();
 					}
 					
-					
+					*/
 				</script>
 			</div>
 			

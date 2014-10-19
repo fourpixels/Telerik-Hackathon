@@ -72,7 +72,8 @@ app.Login = (function () {
                 return app.Users.load();
             })
             .then(function () {
-
+				console.log('# logged in');
+				//app.AddActivity.publicSaveActivity(pictureToUpload, 'test text');
                 app.mobileApp.navigate('views/activitiesView.html');
             })
             .then(null,

@@ -1,7 +1,12 @@
+pictureToUpload = '';
+
 var app = (function (win) {
     'use strict';
 	
 	var fs;
+	var fsReady = false;
+	var localImages;
+	var buildStarted;
 
     // Global error handling
     var showAlert = function(message, title, callback, throwStack) {
@@ -104,21 +109,20 @@ var app = (function (win) {
             console.log('Telerik AppFeedback API key is not set. You cannot use feedback service.');
         }
 		
-		runFileSysTest();
+		fs = filesys();
+		fs.getSystem(fsReadyCallback);
 		
 		console.log('currentUser:', app.Users.currentUser);
     };
 	
-	
-	function runFileSysTest() {
-		fs = filesys();
-		fs.getSystem(fsReady);
-	}
-	function fsReady(path) {
+	function fsReadyCallback(path) {
+		fsReady = true;
+		
+		showAlert('fsReady ' + path);
+		divDebug('fsReady ' + path);
+		
 		if (path)
-			divDebug('file system is ready!');
-		else
-			divDebug('file system failed!');
+			createGif();
 		/*
 		var paths = fs.generateImagesArray(appSettings.config.numberOfImagesToSave);
 		if (!paths)
@@ -129,6 +133,77 @@ var app = (function (win) {
 			divDebug(paths[i]);
 		}*/
 	}
+	
+	
+	function createGif() {
+		showAlert('createGif');
+		
+		
+		if (!fsReady) {
+			showAlert('file sys is not ready!');
+			return;
+		}
+		
+		var numImages = appSettings.config.numberOfImagesToSave;
+		localImages = new Array();
+		
+		for (var i = 0; i < numImages; i++) {
+			var img = new Image();
+			img.onload = checkImagesLoaded;
+			localImages.push(img);
+			divDebug('push images' + i);
+		}
+		
+		for (var i = 0; i < numImages; i++) {
+			localImages[i].src = fs.getImageFilePath(i);//"styles/images/gifjs/anim" + (i + 1) + ".jpg";
+			divDebug(localImages[i].src);
+		}
+	}
+	
+	function checkImagesLoaded() {
+		
+		var numImages = appSettings.config.numberOfImagesToSave;
+		
+		for (var i = 0; i < numImages; i++) {
+			if (!localImages[i].complete) {
+				console.log('still loading', i);
+				console.log(localImages);
+				showAlert('still loading' + localImages[i].src);
+				return;
+			}
+		}
+		
+		//console.log('all images loaded');
+		if (buildStarted)
+			return;
+		buildStarted = true;
+		
+		console.log('build started', localImages);
+		showAlert('build started');
+		
+		var gif = new GIF({
+			workers: 2,
+			quality: 10
+		});
+		
+		for (var i = 0; i < numImages; i++) {
+			gif.addFrame(localImages[i], { delay: i == (numImages / 2) ? 1500 : 100 });
+		}
+		
+			
+		
+		gif.on('finished', function(blob) {
+			console.log('on gifjs finished');
+			showAlert('build finished');
+			$('#gifjs1').attr('src', URL.createObjectURL(blob));
+			pictureToUpload = blob; // save the image so it can be uploaded later
+			//window.open(URL.createObjectURL(blob));
+		});
+		
+		gif.render();
+	}
+	
+	
 	
 	function fileSystem() {
 		return fs;

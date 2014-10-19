@@ -25,6 +25,10 @@ var filesys = function() {
 		
 		return paths;
 	}
+	
+	function getImageFilePath(index) {
+		return folderPath + fileName.replace("X", index);
+	}
 		
 	function getSystem(callback) {
 		readyCallback = callback;
@@ -79,6 +83,8 @@ var filesys = function() {
 	
 	return {
 		getSystem: getSystem,
+		folderPath: folderPath,
+		getImageFilePath: getImageFilePath,
 		generateImagesArray: generateImagesArray
 	}
 }
